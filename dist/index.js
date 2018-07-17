@@ -53,6 +53,9 @@ define("BitBuffer", ["require", "exports"], function (require, exports) {
         BitBuffer.prototype.clear = function () {
             for (var i = 0; i < this._position; i++)
                 this._buffer[i] = 0;
+            return this.reset();
+        };
+        BitBuffer.prototype.reset = function () {
             return this.seek(0);
         };
         BitBuffer.prototype.skip = function (amount) {
@@ -85,7 +88,7 @@ define("BitBuffer", ["require", "exports"], function (require, exports) {
         });
         Object.defineProperty(BitBuffer.prototype, "remaining", {
             get: function () {
-                return this._size - this._offset;
+                return this._size - this._position;
             },
             enumerable: true,
             configurable: true
