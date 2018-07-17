@@ -1,6 +1,11 @@
 # bitbuff
 A binary array for storing and manipulating bits
 
+# Installation
+```
+npm i --save bitbuff
+```
+
 # Examples
 ```javascript
 var buffer = new BitBuffer(10 * 8); // 10 bytes
