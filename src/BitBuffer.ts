@@ -78,6 +78,10 @@ export class BitBuffer {
         for (let i = 0; i < this._position; i++)
             this._buffer[i] = 0;
 
+        return this.reset();
+    }
+
+    public reset(): BitBuffer {
         return this.seek(0);
     }
 
@@ -103,6 +107,6 @@ export class BitBuffer {
     }
 
     public get remaining(): number {
-        return this._size - this._offset;
+        return this._size - this._position;
     }
 }
