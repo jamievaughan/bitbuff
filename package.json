@@ -1,0 +1,28 @@
+{
+  "name": "bitbuff",
+  "version": "1.0.0",
+  "description": "A binary array for manipulating bits",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamievaughan/bitbuff.git"
+  },
+  "keywords": [
+    "bitbuffer",
+    "bit",
+    "binary",
+    "array",
+    "bits",
+    "bit",
+    "buffer"
+  ],
+  "author": "Jamie Vaughan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jamievaughan/bitbuff/issues"
+  },
+  "homepage": "https://github.com/jamievaughan/bitbuff#readme"
+}
