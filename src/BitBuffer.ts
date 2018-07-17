@@ -2,7 +2,7 @@ export class BitBuffer {
     private readonly _size: number;
     private readonly _buffer: Uint8Array;
 
-    private _offset: number = 0;
+    private _position: number = 0;
 
     constructor(size: number) {
         this._size = size;
@@ -11,15 +11,15 @@ export class BitBuffer {
     }
 
     public write(value: number, count: number): BitBuffer {
-        this.set(this._offset, value, count);
-        this._offset += count;
-
-        return this;
+        this.set(this._position, value, count);
+        
+        return this.skip(count);
     }
 
     public read(count: number): number {
-        const value = this.get(this._offset, count);        
-        this._offset -= count;
+        const value = this.get(this._position, count);
+
+        this.skip(count);
         
         return value;
     }
@@ -75,16 +75,18 @@ export class BitBuffer {
     }
 
     public clear(): BitBuffer {
-        for (let i = 0; i < this._offset; i++)
+        for (let i = 0; i < this._position; i++)
             this._buffer[i] = 0;
 
-        this._offset = 0;
-
-        return this;
+        return this.seek(0);
     }
 
     public skip(amount: number): BitBuffer {
-        this._offset += amount;
+        return this.seek(this._position + amount);
+    }
+
+    public seek(offset: number): BitBuffer {
+        this._position = offset;
         return this;
     }
 
@@ -96,8 +98,8 @@ export class BitBuffer {
         return this._buffer;
     }
 
-    public get offset(): number {
-        return this._offset;
+    public get position(): number {
+        return this._position;
     }
 
     public get remaining(): number {
