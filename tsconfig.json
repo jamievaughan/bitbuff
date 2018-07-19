@@ -1,7 +1,7 @@
 {
 	"strict": true,
 	"compilerOptions": {
-		"module": "commonjs",
+		"module": "amd",
 		"outFile": "dist/index.js",
 		"target": "es5",
 		"declaration": true,
@@ -15,5 +15,8 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true
-	}
+	},	
+	"include": [
+		"src/**/*"
+	],
 }
