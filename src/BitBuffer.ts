@@ -1,73 +1,73 @@
 export class BitBuffer {
     private readonly _size: number;
-    private readonly _buffer: Uint8Array;
+    private readonly _array: Uint8Array;
 
     private _position: number = 0;
 
     constructor(size: number) {
         this._size = size;
 
-        this._buffer = new Uint8Array(size >> 3);
+        this._array = new Uint8Array(size >> 3);
     }
 
-    public write(value: number, count: number): BitBuffer {
-        this.set(this._position, value, count);
+    public write(value: number, numBits: number): BitBuffer {
+        this.set(value, this._position, numBits);
         
-        return this.skip(count);
+        return this.skip(numBits);
     }
 
-    public read(count: number): number {
-        const value = this.get(this._position, count);
+    public read(numBits: number): number {
+        const value = this.get(this._position, numBits);
 
-        this.skip(count);
+        this.skip(numBits);
         
         return value;
     }
 
-    public set(value: number, offset: number, count: number): BitBuffer {
-        if (offset + count > this._size)
+    public set(value: number, position: number, numBits: number): BitBuffer {
+        if (position < 0 || position + numBits > this._size)
             throw new RangeError();
 
-        let bytePosition = offset >> 3;
-        let bitPosition = 8 - (offset & 7);
+        let bytePosition = position >> 3;
+        let bitPosition = 8 - (position & 7);
 
-        for (; count > bitPosition; bitPosition = 8) {
+        for (; numBits > bitPosition; bitPosition = 8) {
             const mask = (1 << bitPosition) - 1;
 
-            this._buffer[bytePosition] &= ~mask;
-            this._buffer[bytePosition++] |= (value >> (count - bitPosition)) & mask;
+            this._array[bytePosition] &= ~mask;
+            this._array[bytePosition++] |= (value >> (numBits - bitPosition)) & mask;
 
-            count -= bitPosition;
+            numBits -= bitPosition;
         }
 
-        const mask = (1 << count) - 1;
-        const diff = bitPosition - count;
+        const mask = (1 << numBits) - 1;
+        const diff = bitPosition - numBits;
 
-        this._buffer[bytePosition] &= ~(mask << diff);        
-        this._buffer[bytePosition] |= (value & mask) << diff;
+        this._array[bytePosition] &= ~(mask << diff);        
+        this._array[bytePosition] |= (value & mask) << diff;
 
         return this;
     }
 
-    public get(offset: number, count: number): number {
-        if (offset < 0)
+    public get(position: number, numBits: number): number {
+        if (position < 0 || position + numBits > this._size)
             throw new RangeError();
         
-        let bytePosition = offset >> 3;
-        let bitPosition = 8 - (offset & 7);
+        let bytePosition = position >> 3;
+        let bitPosition = 8 - (position & 7);
 
         let accumulator = 0;
 
-        for (; count > bitPosition; bitPosition = 8) {
+        for (; numBits > bitPosition; bitPosition = 8) {
             const mask = (1 << bitPosition) - 1;
 
-            accumulator += (this._buffer[bytePosition++] & mask) << (count - bitPosition);
-            count -= bitPosition;
+            accumulator += (this._array[bytePosition++] & mask) << (numBits - bitPosition);
+            numBits -= bitPosition;
         }
 
-        const mask = (1 << count) - 1;
-        const current = this._buffer[bytePosition];
-        const diff = (bitPosition - count);
+        const mask = (1 << numBits) - 1;
+        const current = this._array[bytePosition];
+        const diff = (bitPosition - numBits);
 
         accumulator += (!diff ? current : current >> diff) & mask;        
 
@@ -75,8 +75,8 @@ export class BitBuffer {
     }
 
     public clear(): BitBuffer {
-        for (let i = 0; i < this._position; i++)
-            this._buffer[i] = 0;
+        for (let i = 0; i < this._array.length; i++)
+            this._array[i] = 0;
 
         return this.reset();
     }
@@ -89,8 +89,9 @@ export class BitBuffer {
         return this.seek(this._position + amount);
     }
 
-    public seek(offset: number): BitBuffer {
-        this._position = offset;
+    public seek(position: number): BitBuffer {
+        this._position = position;
+
         return this;
     }
 
@@ -98,8 +99,8 @@ export class BitBuffer {
         return this._size;
     }
 
-    public get buffer(): Uint8Array {
-        return this._buffer;
+    public get array(): Uint8Array {
+        return this._array;
     }
 
     public get position(): number {

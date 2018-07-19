@@ -1,9 +1,13 @@
 # bitbuff
-A binary array for storing and manipulating bits
+A binary buffer for storing and manipulating bits
 
 # Installation
 ```
 npm i --save bitbuff
+```
+
+```
+npm i bitbuff -g
 ```
 
 # Examples

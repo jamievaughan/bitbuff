@@ -1,10 +1,9 @@
 {
 	"strict": true,
 	"compilerOptions": {
-		"module": "amd",
+		"module": "commonjs",
 		"outFile": "dist/index.js",
 		"target": "es5",
-		"lib": ["es7"],
 		"declaration": true,
 		"experimentalDecorators": true,      
 		"strict": true,

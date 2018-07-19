@@ -1,10 +1,10 @@
 {
   "name": "bitbuff",
   "version": "1.0.2",
-  "description": "A binary array for manipulating bits",
+  "description": "A binary buffer for manipulating bits",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,14 @@
   "bugs": {
     "url": "https://github.com/jamievaughan/bitbuff/issues"
   },
-  "homepage": "https://github.com/jamievaughan/bitbuff#readme"
+  "homepage": "https://github.com/jamievaughan/bitbuff#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "chai": "^4.1.2",
+    "ts-node": "^7.0.0"
+  }
 }
