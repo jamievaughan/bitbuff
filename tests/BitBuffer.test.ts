@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import { BitBuffer } from '../src/BitBuffer';
+import { BitBuffer } from '../src';
 
 describe("BitBuffer", () => {
     describe("constructor()", () => {

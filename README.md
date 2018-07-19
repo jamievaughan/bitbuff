@@ -10,7 +10,7 @@ npm i --save bitbuff
 npm i bitbuff -g
 ```
 
-# Examples
+# Usage
 ```javascript
 var buffer = new BitBuffer(10 * 8); // 10 bytes
 

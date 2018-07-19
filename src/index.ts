@@ -111,3 +111,5 @@ export class BitBuffer {
         return this._size - this._position;
     }
 }
+
+export default BitBuffer;
