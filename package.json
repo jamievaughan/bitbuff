@@ -28,10 +28,10 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",
-    "mocha": "^5.2.0"
-  },
-  "dependencies": {
+    "mocha": "^5.2.0",
     "chai": "^4.1.2",
     "ts-node": "^7.0.0"
+  },
+  "dependencies": {
   }
 }
