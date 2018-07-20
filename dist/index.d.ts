@@ -16,3 +16,4 @@ export declare class BitBuffer {
     readonly position: number;
     readonly remaining: number;
 }
+export default BitBuffer;

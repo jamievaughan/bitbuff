@@ -86,10 +86,16 @@ export class BitBuffer {
     }
 
     public skip(amount: number): BitBuffer {
+        if (this._position + amount > this._size)
+            throw new RangeError();
+        
         return this.seek(this._position + amount);
     }
 
     public seek(position: number): BitBuffer {
+        if (position > this._size)
+            throw new RangeError();
+
         this._position = position;
 
         return this;

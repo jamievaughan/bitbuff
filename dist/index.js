@@ -58,9 +58,13 @@ var BitBuffer = /** @class */ (function () {
         return this.seek(0);
     };
     BitBuffer.prototype.skip = function (amount) {
+        if (this._position + amount > this._size)
+            throw new RangeError();
         return this.seek(this._position + amount);
     };
     BitBuffer.prototype.seek = function (position) {
+        if (position > this._size)
+            throw new RangeError();
         this._position = position;
         return this;
     };
@@ -95,3 +99,4 @@ var BitBuffer = /** @class */ (function () {
     return BitBuffer;
 }());
 exports.BitBuffer = BitBuffer;
+exports.default = BitBuffer;

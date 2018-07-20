@@ -21,6 +21,12 @@ describe("BitBuffer", () => {
 
             assert.equal(buffer.position, position);
         });
+        
+        it("throws a RangeError if position overflows buffer size", () => {
+            const buffer = new BitBuffer(16);
+
+            assert.throws(() => buffer.seek(17), RangeError);
+        });
     });
 
     describe("skip()", () => {
@@ -31,6 +37,12 @@ describe("BitBuffer", () => {
             buffer.skip(numBits);
 
             assert.equal(buffer.position, numBits);
+        });        
+
+        it("throws a RangeError if position and amount overflows buffer size", () => {
+            const buffer = new BitBuffer(16);
+
+            assert.throws(() => buffer.seek(5).skip(12), RangeError);
         });
     });
 
@@ -51,6 +63,15 @@ describe("BitBuffer", () => {
             buffer.write(128, 8);
 
             assert.equal(buffer.position, 8);
+        });
+        
+        it("throws a RangeError if write overflows buffer size", () => {
+            const buffer = new BitBuffer(16);
+
+            assert.throws(() =>
+                buffer
+                    .write(512, 16)
+                    .write(1, 1), RangeError);
         });
     });
 
@@ -76,6 +97,16 @@ describe("BitBuffer", () => {
                 .read(8);
 
             assert.equal(buffer.position, 8);
+        });
+        
+        it("throws a RangeError if read overflows buffer size", () => {
+            const buffer = new BitBuffer(16);
+
+            assert.throws(() =>
+                buffer
+                    .write(512, 16)
+                    .reset()
+                    .read(17), RangeError);
         });
     });
 
